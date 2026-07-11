@@ -6,7 +6,7 @@
 <title>Meridian — Intelligent Timetable Generation System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="csss/style.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -17,9 +17,9 @@
   <div class="login-card">
     <div class="login-aside">
       <div>
-        <div class="brand-mark"><span class="dot"></span> automation</div>
-        <h1>The timetable,<br>generator.</h1>
-        <p>Intelligent conflict-free scheduling for classroom lecture and examination, editable in one click.</p>
+        <div class="brand-mark"><span class="dot"></span> Meridian Scheduling</div>
+        <h1>The timetable,<br>solved.</h1>
+        <p>Intelligent conflict-free scheduling for departments, lecturers, courses and classrooms — generated in seconds, editable in one click.</p>
       </div>
       <div class="period-strip">
         <span>Mon 08:00</span><span>Tue 09:00</span><span>Wed 10:00</span><span>Thu 08:00</span><span>Fri 09:00</span>
@@ -40,7 +40,7 @@
         </div>
         <button type="submit" class="btn btn-gold btn-block">Sign in</button>
       </form>
-      <!-- <div class="login-hint">demo login → username: <b>admin</b> &nbsp;·&nbsp; password: <b>admin123</b></div> -->
+      <div class="login-hint">demo login → username: <b>admin</b> &nbsp;·&nbsp; password: <b>admin123</b></div>
     </div>
   </div>
 </div>
@@ -48,13 +48,22 @@
 <!-- =========================================================================
      APP SHELL
      ========================================================================= -->
+<div class="mobile-topbar" id="mobileTopbar">
+  <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">☰</button>
+  <div class="mt-brand">
+    <div class="mark">M</div>
+    <div class="name">Meridian</div>
+  </div>
+</div>
+<div class="sidebar-scrim" id="sidebarScrim"></div>
+
 <div id="appShell">
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebarEl">
     <div class="sidebar-brand">
       <div class="mark">M</div>
       <div>
-        <div class="name">University</div>
-        <div class="tag">Timetable generator</div>
+        <div class="name">Meridian</div>
+        <div class="tag">Timetable Engine</div>
       </div>
     </div>
     <nav class="navlist" id="navList">
@@ -92,7 +101,7 @@
         <div>
           <div class="eyebrow">Overview</div>
           <h1>Dashboard</h1>
-          <!-- <div class="desc">A snapshot of your institution's scheduling data and current timetable health.</div> -->
+          <div class="desc">A snapshot of your institution's scheduling data and current timetable health.</div>
         </div>
         <div class="page-actions">
           <button class="btn btn-gold" onclick="goView('generate')">⚡ Generate Timetable</button>
@@ -169,7 +178,7 @@
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Code</th><th>Course</th><th>Department</th><th>Lecturer</th><th>credit Unit</th><th>No.student</th><th style="width:100px">Actions</th></tr></thead>
+          <thead><tr><th>Code</th><th>Course</th><th>Department</th><th>Lecturer</th><th>Sessions/wk</th><th>Cohort</th><th style="width:100px">Actions</th></tr></thead>
           <tbody id="coursesTbody"></tbody>
         </table>
       </div>
@@ -355,7 +364,6 @@
 
 <div id="toastHost"></div>
 
-
-<script src="js/index.js"></script>
+<script src="index.js"></script>
 </body>
 </html>
