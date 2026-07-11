@@ -9,9 +9,6 @@
 const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
 
 let db = {
-  users: [
-    { id:1, username:'Salim', password:'12345678', name:'System Administrator', role:'Administrator' }
-  ],
   departments: [],
   lecturers: [],
   courses: [],
@@ -70,26 +67,58 @@ seed();
    ========================================================================= */
 let currentUser = null;
 
-document.getElementById('loginForm').addEventListener('submit', (e)=>{
+document.getElementById('loginForm').addEventListener('submit', async (e)=>{
   e.preventDefault();
-  const u = document.getElementById('loginUser').value.trim();
-  const p = document.getElementById('loginPass').value;
-  const found = db.users.find(x=>x.username===u && x.password===p);
+  const email = document.getElementById('loginUser').value.trim();
+  const pass = document.getElementById('loginPass').value;
   const err = document.getElementById('loginError');
-  if(!found){ err.style.display='flex'; return; }
-  err.style.display='none';
-  currentUser = found;
+  const submitBtn = e.target.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass });
+
+  if (error) {
+    err.textContent = error.message;
+    err.style.display = 'flex';
+    submitBtn.disabled = false;
+    return;
+  }
+  err.style.display = 'none';
+  await enterApp(data.user);
+  submitBtn.disabled = false;
+});
+
+async function enterApp(authUser){
+  const { data: profile, error: profileErr } = await supabase
+    .from('users')
+    .select('full_name, role')
+    .eq('id', authUser.id)
+    .single();
+
+  if (profileErr) {
+    console.error('Could not load profile:', profileErr.message);
+  }
+  const name = profile?.full_name || authUser.email;
+  const role = profile?.role || 'viewer';
+
+  currentUser = { id: authUser.id, name, role };
   document.getElementById('loginScreen').style.display='none';
   const shell = document.getElementById('appShell');
   shell.classList.add('active');
   document.getElementById('mobileTopbar').classList.add('active');
-  document.getElementById('userName').textContent = found.name;
-  document.getElementById('userRole').textContent = found.role;
-  document.getElementById('userAvatar').textContent = found.name.split(' ').map(w=>w[0]).slice(0,2).join('');
+  document.getElementById('userName').textContent = name;
+  document.getElementById('userRole').textContent = role;
+  document.getElementById('userAvatar').textContent = name.split(' ').map(w=>w[0]).slice(0,2).join('');
   renderAll();
+}
+
+// Auto-login if a session already exists (e.g. page refresh)
+supabase.auth.getSession().then(({ data: { session } }) => {
+  if (session?.user) enterApp(session.user);
 });
 
-document.getElementById('logoutBtn').addEventListener('click', ()=>{
+document.getElementById('logoutBtn').addEventListener('click', async ()=>{
+  await supabase.auth.signOut();
   currentUser = null;
   document.getElementById('appShell').classList.remove('active');
   document.getElementById('mobileTopbar').classList.remove('active');
