@@ -25,14 +25,18 @@
         <span>Mon 08:00</span><span>Tue 09:00</span><span>Wed 10:00</span><span>Thu 08:00</span><span>Fri 09:00</span>
       </div>
     </div>
-    <div class="login-form">
+ <div class="login-form">
       <h2>Sign in</h2>
       <div class="sub">Enter your credentials to access the scheduling console.</div>
       <div class="login-error" id="loginError">Invalid username or password.</div>
       <form id="loginForm">
         <div class="field">
-          <label for="loginUser">Username</label>
-          <input id="loginUser" type="text" autocomplete="username" required>
+          <label for="loginUser">Email</label>
+          <input id="loginUser" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="loginPass">Password</label>
+          <input id="loginPass" type="password" autocomplete="current-password" required>
         </div>
         <button type="submit" class="btn btn-gold btn-block">Sign in</button>
       </form>
