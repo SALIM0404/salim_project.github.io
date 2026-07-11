@@ -32,11 +32,11 @@ function seed(){
   const l = (name,email,deptId,max) => { const id = nextId('lecturer'); db.lecturers.push({id,name,email,departmentId:deptId,maxHours:max}); return id; };
   const l1 = l('Dr. Muhammad Bello Ibrahim','mbibrahim@gmail.com',cs,16);
   const l2 = l('Mr. Abbas Baba yaro','saniaudu@meridian.edu',cs,14);
-  const l3 = l('victor Anand','vic.anand@meridian.edu',ee,16);
-  const l4 = l('Salim Mahmood','msaleem333@gmail.com',ee,12);
+  const l3 = l('Mr. victor Anand','vic.anand@meridian.edu',ee,16);
+  const l4 = l('Mr. Salim Mahmood','msaleem333@gmail.com',ee,12);
   const l5 = l('Dr. Sofia Emmanuel','sofiaemm@meridian.edu',ma,18);
-  const l6 = l('Dr. Tunde Sabiu','tunde.bakare@meridian.edu',ma,14);
-  const l7 = l('Prof. Audu Sani','grace.muthoni@meridian.edu',ba,12);
+  const l6 = l('Dr. hadiza sabiu','tunde.bakare@meridian.edu',ma,14);
+  const l7 = l('Prof.Audu Sani','grace.muthoni@meridian.edu',ba,12);
   const l8 = l('Dr. Ibrahim Gumbo','james.whitfield@meridian.edu',ba,14);
 
   const r = (name,cap,type) => { const id = nextId('classroom'); db.classrooms.push({id,name,capacity:cap,type}); return id; };
