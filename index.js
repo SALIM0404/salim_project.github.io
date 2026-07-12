@@ -75,7 +75,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e)=>{
   const submitBtn = e.target.querySelector('button[type="submit"]');
   submitBtn.disabled = true;
 
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass });
+  const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
 
   if (error) {
     err.textContent = error.message;
@@ -89,7 +89,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e)=>{
 });
 
 async function enterApp(authUser){
-  const { data: profile, error: profileErr } = await supabase
+  const { data: profile, error: profileErr } = await sb
     .from('users')
     .select('full_name, role')
     .eq('id', authUser.id)
@@ -113,12 +113,12 @@ async function enterApp(authUser){
 }
 
 // Auto-login if a session already exists (e.g. page refresh)
-supabase.auth.getSession().then(({ data: { session } }) => {
+sb.auth.getSession().then(({ data: { session } }) => {
   if (session?.user) enterApp(session.user);
 });
 
 document.getElementById('logoutBtn').addEventListener('click', async ()=>{
-  await supabase.auth.signOut();
+  await sb.auth.signOut();
   currentUser = null;
   document.getElementById('appShell').classList.remove('active');
   document.getElementById('mobileTopbar').classList.remove('active');
